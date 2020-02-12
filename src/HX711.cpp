@@ -94,15 +94,12 @@ void HX711::set_gain(byte gain) {
 			GAIN = 2;
 			break;
 	}
-
-	digitalWrite(PD_SCK, LOW);
-	read();
 }
 
 long HX711::read() {
 
-	// Wait for the chip to become ready.
-	wait_ready();
+	// If chip is not ready then bail.
+    if (!is_ready()) return -1;
 
 	// Define structures for reading data into.
 	unsigned long value = 0;
